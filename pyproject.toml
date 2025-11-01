@@ -1,0 +1,36 @@
+[project]
+name = "amplifier-collection-toolkit"
+version = "1.0.0"
+description = "Collection for building sophisticated CLI tools using metacognitive recipes with Amplifier"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Microsoft Amplifier Team", email = "amplifier@microsoft.com" }
+]
+
+dependencies = [
+    "click>=8.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/microsoft/amplifier-collection-toolkit"
+Repository = "https://github.com/microsoft/amplifier-collection-toolkit"
+Documentation = "https://github.com/microsoft/amplifier-collection-toolkit/tree/main/docs"
+Issues = "https://github.com/microsoft/amplifier-collection-toolkit/issues"
+
+[tool.amplifier.collection]
+author = "Microsoft Amplifier Team"
+capabilities = [
+    "scenario-tool-development",
+    "multi-config-patterns",
+    "utilities",
+    "metacognitive-recipes"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/amplifier_collection_toolkit"]
