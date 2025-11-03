@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "amplifier-collection-toolkit"
 version = "1.0.0"
@@ -8,7 +12,6 @@ license = { text = "MIT" }
 authors = [
     { name = "Microsoft Amplifier Team", email = "amplifier@microsoft.com" }
 ]
-
 dependencies = [
     "click>=8.1.0",
 ]
@@ -19,6 +22,13 @@ Repository = "https://github.com/microsoft/amplifier-collection-toolkit"
 Documentation = "https://github.com/microsoft/amplifier-collection-toolkit/tree/main/docs"
 Issues = "https://github.com/microsoft/amplifier-collection-toolkit/issues"
 
+[tool.setuptools]
+packages = { find = {} }
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["*.md", "*.toml", "*.json", "*.yaml"]
+
 [tool.amplifier.collection]
 author = "Microsoft Amplifier Team"
 capabilities = [
@@ -27,10 +37,3 @@ capabilities = [
     "utilities",
     "metacognitive-recipes"
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/amplifier_collection_toolkit"]

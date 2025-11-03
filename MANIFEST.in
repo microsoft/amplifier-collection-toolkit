@@ -1,0 +1,20 @@
+# Metadata
+include LICENSE
+include CODE_OF_CONDUCT.md
+include SECURITY.md
+include SUPPORT.md
+include README.md
+include pyproject.toml
+
+# Collection resources
+recursive-include agents *
+recursive-include profiles *
+recursive-include scenario-tools *
+recursive-include templates *
+recursive-include docs *
+recursive-include amplifier_collection_toolkit *.py *.toml
+graft agents
+graft profiles
+graft scenario-tools
+graft templates
+graft docs
