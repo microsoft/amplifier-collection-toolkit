@@ -71,6 +71,7 @@ amplifier collection add git+https://github.com/microsoft/amplifier-collection-t
 
 # Verify installation
 amplifier collection list
+amplifier collection show toolkit
 
 # Tutorial analyzer automatically available
 tutorial-analyzer --help

@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "amplifier-collection-toolkit"
+name = "toolkit"
 version = "1.0.0"
 description = "Collection for building sophisticated CLI tools using metacognitive recipes with Amplifier"
 readme = "../README.md"

@@ -96,7 +96,7 @@ This profile embodies toolkit principles:
 
 ## Related
 
-- **Collection**: amplifier-collection-toolkit
+- **Collection**: toolkit
 - **Utilities**: `from amplifier_collection_toolkit import ...`
 - **Examples**: scenario-tools/tutorial-analyzer/
 - **Docs**: docs/TOOLKIT_GUIDE.md

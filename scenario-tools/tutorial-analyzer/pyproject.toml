@@ -11,7 +11,7 @@ authors = [
 
 dependencies = [
     "amplifier-core",
-    "amplifier-collection-toolkit",
+    "toolkit",
     "click>=8.1.0",
 ]
 
