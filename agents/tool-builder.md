@@ -1,10 +1,16 @@
 ---
 name: tool-builder
 description: Agent that helps build scenario tools using metacognitive recipes
+model: inherit
 capabilities:
   - tool-scaffolding
   - pattern-guidance
   - config-optimization
+keywords:
+  - toolkit
+  - scenario-tools
+  - metacognitive-recipes
+  - multi-config
 ---
 
 # Tool Builder Agent

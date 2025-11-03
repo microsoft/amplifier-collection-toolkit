@@ -1,40 +1,19 @@
 ---
-name: toolkit-dev
-description: Profile optimized for developing scenario tools with metacognitive recipes
-extends: foundation
----
+profile:
+  name: toolkit-dev
+  version: 1.0.0
+  description: Toolkit development configuration with metacognitive recipe helpers
+  extends: foundation
 
-# Toolkit Development Profile
-
-Optimized for building sophisticated CLI tools using metacognitive recipes.
-
-## Configuration
-
-This profile extends `foundation` with toolkit-specific optimizations:
-
-### Session Configuration
-
-```yaml
 session:
-  orchestrator: loop-streaming   # Real-time feedback during development
-  context: context-simple        # Lightweight for rapid iteration
-```
-
-### Provider Overrides
-
-```yaml
-providers:
-  - module: provider-anthropic
-    source: git+https://github.com/microsoft/amplifier-module-provider-anthropic@main
+  orchestrator:
+    module: loop-streaming
+    source: git+https://github.com/microsoft/amplifier-module-loop-streaming@main
     config:
-      default_model: claude-sonnet-4-5  # Fast, cost-effective for development
-      temperature: 0.3                   # Analytical default (adjust per stage)
-      max_tokens: 4096
-```
+      extended_thinking: true
+  context:
+    module: context-simple
 
-### Additional Tools
-
-```yaml
 tools:
   - module: tool-filesystem
     source: git+https://github.com/microsoft/amplifier-module-tool-filesystem@main
@@ -43,7 +22,6 @@ tools:
         - .
         - ./scenario-tools
         - ./tests
-
   - module: tool-bash
     source: git+https://github.com/microsoft/amplifier-module-tool-bash@main
     config:
@@ -51,27 +29,26 @@ tools:
         - pytest
         - uv
         - python
-```
+  - module: tool-task
+    source: git+https://github.com/microsoft/amplifier-module-tool-task@main
 
-### Hooks
-
-```yaml
 hooks:
   - module: hooks-logging
     source: git+https://github.com/microsoft/amplifier-module-hooks-logging@main
     config:
       log_file: .toolkit_dev.log
       log_level: DEBUG
-```
 
-## Use Cases
+agents:
+  dirs:
+    - ./agents
+---
 
-Perfect for:
-- Building new scenario tools
-- Testing multi-config patterns
-- Debugging tool orchestration
-- Rapid prototyping
-- Learning metacognitive recipes
+# Toolkit Development Profile
+
+Optimized for building sophisticated CLI tools using metacognitive recipes.
+
+Use this profile when you want fast iteration with streaming feedback, direct filesystem access, and tooling tuned for multi-config recipe development.
 
 ## Usage
 
@@ -86,13 +63,12 @@ amplifier run --mode chat
 amplifier run "Help me build a document analyzer using the toolkit pattern"
 ```
 
-## Philosophy
+## Included Capabilities
 
-This profile embodies toolkit principles:
-- Fast iteration (streaming, simple context)
-- Development-friendly (debug logging, filesystem/bash tools)
-- Cost-effective (Sonnet model)
-- Practical (sensible defaults)
+- Streaming orchestration with lightweight context for rapid iteration
+- Filesystem + bash tooling constrained to the project workspace
+- Task delegation via the Toolkit `tool-builder` agent
+- Debug logging configured for development loops
 
 ## Related
 

@@ -57,6 +57,9 @@ Starting point for building your own scenario tools:
 
 **toolkit-dev**: Profile optimized for tool development workflow
 
+- Extends the `foundation` profile and inherits whichever provider you have active (no Anthropic requirement)
+- Auto-discovers agents shipped in this collection so `tool-builder` is available immediately
+
 ### 6. Example Agent
 
 **tool-builder**: Agent that helps create new scenario tools
