@@ -16,23 +16,17 @@ Analyzes tutorials from a learner's perspective and generates a detailed improve
 
 ## Installation
 
-**Automatic (via collection)**:
+**Via collection** (recommended):
 ```bash
-# Install the collection
+# Install the toolkit collection
 amplifier collection add git+https://github.com/microsoft/amplifier-collection-toolkit@main
 
-# tutorial-analyzer automatically installed
+# tutorial-analyzer is included as a scenario-tool
+# Use it directly:
 tutorial-analyzer tutorial.md
 ```
 
-**Direct install**:
-```bash
-# Via uv tool
-uv tool install git+https://github.com/microsoft/amplifier-collection-toolkit#subdirectory=scenario-tools/tutorial-analyzer
-
-# Via uvx (no install)
-uvx --from git+https://github.com/microsoft/amplifier-collection-toolkit#subdirectory=scenario-tools/tutorial-analyzer tutorial-analyzer tutorial.md
-```
+**Note**: tutorial-analyzer is designed to work within the Amplifier ecosystem and requires amplifier-core. Install via the collection rather than as a standalone tool.
 
 ## Usage
 
