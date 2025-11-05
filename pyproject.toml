@@ -13,6 +13,8 @@ authors = [
     { name = "Microsoft Amplifier Team", email = "amplifier@microsoft.com" }
 ]
 dependencies = [
+    "amplifier-core",
+    "amplifier-module-resolution",
     "click>=8.1.0",
 ]
 
@@ -37,3 +39,7 @@ capabilities = [
     "utilities",
     "metacognitive-recipes"
 ]
+
+[tool.uv.sources]
+amplifier-core = { git = "https://github.com/microsoft/amplifier-core", branch = "main" }
+amplifier-module-resolution = { git = "https://github.com/microsoft/amplifier-module-resolution", branch = "main" }

@@ -9,6 +9,7 @@ Modules:
 - file_ops: File discovery, JSON I/O, path validation
 - progress: Progress reporting
 - validation: Input validation
+- session: Standalone session creation with module resolution
 
 Philosophy:
 - Use AmplifierSession directly (don't wrap kernel mechanisms)
@@ -31,6 +32,7 @@ from .file_ops import safe_write_text
 from .file_ops import validate_path_exists
 from .file_ops import write_json
 from .progress import ProgressReporter
+from .session import create_standalone_session
 from .validation import validate_input_path
 from .validation import validate_minimum_files
 from .validation import validate_output_path
@@ -49,6 +51,8 @@ __all__ = [
     "append_jsonl",
     # Progress reporting
     "ProgressReporter",
+    # Session creation
+    "create_standalone_session",
     # Validation
     "validate_input_path",
     "validate_output_path",

@@ -11,18 +11,25 @@ Philosophy:
 - AmplifierSession is MECHANISM - kernel unchanged
 """
 
-from amplifier_core import AmplifierSession
+from amplifier_collection_toolkit import create_standalone_session
 
 from ..utils import extract_dict_from_response
 
 IMPROVER_CONFIG = {
     "session": {
-        "orchestrator": "loop-streaming",  # Long-form generation
-        "context": "context-simple",
+        "orchestrator": {
+            "module": "loop-streaming",
+            "source": "git+https://github.com/microsoft/amplifier-module-loop-streaming@main",
+        },
+        "context": {
+            "module": "context-simple",
+            "source": "git+https://github.com/microsoft/amplifier-module-context-simple@main",
+        },
     },
     "providers": [
         {
             "module": "provider-anthropic",
+            "source": "git+https://github.com/microsoft/amplifier-module-provider-anthropic@main",
             "config": {
                 "model": "claude-opus-4-1",
                 "temperature": 0.7,  # Creative exploration
@@ -88,7 +95,7 @@ IMPORTANT: The "suggestions" field MUST be an ARRAY of at least 5-8 improvement 
 Generate specific, actionable, pedagogically-focused improvements.
 """
 
-    async with AmplifierSession(config=IMPROVER_CONFIG) as session:
+    async with await create_standalone_session(config=IMPROVER_CONFIG) as session:
         response = await session.execute(prompt)
 
     return extract_dict_from_response(response)

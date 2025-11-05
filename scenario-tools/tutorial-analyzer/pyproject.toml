@@ -11,12 +11,13 @@ authors = [
 
 dependencies = [
     "amplifier-core",
+    "amplifier-module-resolution",
     "toolkit",
     "click>=8.1.0",
 ]
 
 [project.scripts]
-tutorial-analyzer = "tutorial_analyzer.main:main"
+tutorial-analyzer = "tutorial_analyzer.main:cli"
 
 [project.urls]
 Homepage = "https://github.com/microsoft/amplifier-collection-toolkit"
@@ -29,3 +30,11 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tutorial_analyzer"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.uv.sources]
+amplifier-core = { git = "https://github.com/microsoft/amplifier-core", branch = "main" }
+amplifier-module-resolution = { git = "https://github.com/microsoft/amplifier-module-resolution", branch = "main" }
+toolkit = { git = "https://github.com/microsoft/amplifier-collection-toolkit", branch = "main" }

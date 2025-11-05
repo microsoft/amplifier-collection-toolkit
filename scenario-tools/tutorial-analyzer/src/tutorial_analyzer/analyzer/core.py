@@ -11,18 +11,25 @@ Philosophy:
 - AmplifierSession is MECHANISM - kernel unchanged
 """
 
-from amplifier_core import AmplifierSession
+from amplifier_collection_toolkit import create_standalone_session
 
 from ..utils import extract_dict_from_response
 
 ANALYZER_CONFIG = {
     "session": {
-        "orchestrator": "loop-basic",
-        "context": "context-simple",
+        "orchestrator": {
+            "module": "loop-basic",
+            "source": "git+https://github.com/microsoft/amplifier-module-loop-basic@main",
+        },
+        "context": {
+            "module": "context-simple",
+            "source": "git+https://github.com/microsoft/amplifier-module-context-simple@main",
+        },
     },
     "providers": [
         {
             "module": "provider-anthropic",
+            "source": "git+https://github.com/microsoft/amplifier-module-provider-anthropic@main",
             "config": {
                 "model": "claude-sonnet-4-5",
                 "temperature": 0.3,  # Analytical precision
@@ -64,7 +71,7 @@ Return JSON with:
 - examples: Code examples present (boolean)
 """
 
-    async with AmplifierSession(config=ANALYZER_CONFIG) as session:
+    async with await create_standalone_session(config=ANALYZER_CONFIG) as session:
         response = await session.execute(prompt)
 
     return extract_dict_from_response(response)
