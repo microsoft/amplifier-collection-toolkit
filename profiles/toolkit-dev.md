@@ -14,6 +14,10 @@ session:
   context:
     module: context-simple
 
+ui:
+  show_thinking_stream: true
+  show_tool_lines: 5
+
 tools:
   - module: tool-filesystem
     source: git+https://github.com/microsoft/amplifier-module-tool-filesystem@main
@@ -33,6 +37,8 @@ tools:
     source: git+https://github.com/microsoft/amplifier-module-tool-task@main
 
 hooks:
+  - module: hooks-streaming-ui
+    source: git+https://github.com/microsoft/amplifier-module-hooks-streaming-ui@main
   - module: hooks-logging
     source: git+https://github.com/microsoft/amplifier-module-hooks-logging@main
     config:
@@ -69,6 +75,7 @@ amplifier run "Help me build a document analyzer using the toolkit pattern"
 - Filesystem + bash tooling constrained to the project workspace
 - Task delegation via the Toolkit `tool-builder` agent
 - Debug logging configured for development loops
+- **Full visibility**: tool calls, responses, and thinking blocks displayed in real-time
 
 ## Related
 
