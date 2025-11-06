@@ -1,24 +1,24 @@
-"""Main orchestration across all stages.
+"""CLI wrapper around tutorial analysis pipeline.
 
-Pipeline:
-  Analyze → Simulate Learner → Diagnose Issues →
-  → Generate Improvements → [HUMAN APPROVAL] →
-  → Evaluate Improvements → Synthesize Recommendations →
-  → [QUALITY CHECK] → Loop or Finalize
+This is a STUD (interface):
+- Wraps pipeline.py with CLI-specific I/O
+- Console progress (print statements)
+- Console approval (input() blocking)
+- Local file state (.tutorial_analyzer_state.json)
+
+Philosophy:
+- Thin wrapper: Delegates to pipeline, handles only I/O
+- CLI-specific policy: How to display, how to get approval
+- Unchanged UX: Works exactly as before
 """
 
 import asyncio
 import sys
 from pathlib import Path
 
-from .analyzer.core import analyze
-from .critic.core import evaluate_improvements
-from .diagnostician.core import diagnose_issues
-from .improver.core import generate_improvements
-from .learner_simulator.core import simulate_learner
+from .pipeline import run_analysis_pipeline
 from .state import load_state
 from .state import save_state
-from .synthesizer.core import synthesize_recommendations
 
 
 def _generate_report(state: dict, tutorial_path: Path, report_path: Path) -> None:
@@ -97,55 +97,38 @@ def _generate_report(state: dict, tutorial_path: Path, report_path: Path) -> Non
 
 
 async def evolve_tutorial(tutorial_path: Path, focus_areas: list[str] | None = None):
-    """Multi-stage metacognitive recipe for tutorial evolution.
+    """CLI wrapper for tutorial evolution.
 
     Args:
         tutorial_path: Path to tutorial markdown file
         focus_areas: Optional list of areas to focus on (e.g., ["clarity", "examples"])
 
     Returns:
-        Dict with final synthesis results
+        Dict with final results: {report_path, quality_score}
     """
 
-    state = load_state()
+    # CLI reads file
     content = tutorial_path.read_text()
 
-    # Stage 1: Content analysis (autonomous)
-    if "analysis" not in state:
-        print("Stage 1/7: Analyzing tutorial structure...")
-        state["analysis"] = await analyze(content)
-        save_state(state)
-        print("✓ Analysis complete")
+    # CLI uses local state
+    state = load_state()
 
-    # Stage 2: Learner simulation (autonomous)
-    if "learner_experience" not in state:
-        print("Stage 2/7: Simulating learner experience...")
-        state["learner_experience"] = await simulate_learner(content, state["analysis"])
-        save_state(state)
-        print("✓ Simulation complete")
+    # Add focus_areas to state so pipeline can access
+    if focus_areas:
+        state["focus_areas"] = focus_areas
 
-    # Stage 3: Issue diagnosis (autonomous)
-    if "diagnosis" not in state:
-        print("Stage 3/7: Diagnosing pedagogical issues...")
-        state["diagnosis"] = await diagnose_issues(state["learner_experience"], state["analysis"])
-        save_state(state)
-        print("✓ Diagnosis complete")
+    # CLI-specific progress callback
+    def progress(msg: str) -> None:
+        print(msg)
 
-    # Stage 4: Improvement generation (autonomous)
-    if "improvements" not in state:
-        print("Stage 4/7: Generating improvement suggestions...")
-        state["improvements"] = await generate_improvements(state["diagnosis"], focus_areas)
-        save_state(state)
-        print("✓ Improvements generated")
-
-    # Stage 5: HUMAN-IN-LOOP (strategic decision point)
-    if "human_approval" not in state:
+    # CLI-specific approval callback
+    async def request_approval(context: dict) -> dict:
         print("\n" + "=" * 60)
         print("PROPOSED IMPROVEMENTS:")
         print("=" * 60)
 
         # Display improvements (defensive: handle multiple formats)
-        improvements_data = state["improvements"]
+        improvements_data = context["improvements"]
 
         # Handle if LLM returned single improvement instead of array
         if "title" in improvements_data and "description" in improvements_data:
@@ -172,55 +155,31 @@ async def evolve_tutorial(tutorial_path: Path, focus_areas: list[str] | None = N
 
         if approval == "modify":
             modifications = input("What modifications? ")
-            state["improvements"]["modifications"] = modifications
+            return {"decision": approval, "modifications": modifications}
 
-        state["human_approval"] = approval
-        save_state(state)
+        return {"decision": approval}
 
-        if approval == "no":
-            return {"status": "rejected", "reason": "User rejected improvements"}
+    # Run pipeline with CLI callbacks
+    result = await run_analysis_pipeline(
+        content=content,
+        state=state,
+        on_save_state=save_state,  # Uses local .json file
+        on_progress=progress,
+        on_request_approval=request_approval,
+    )
 
-    # Stage 6: Evaluate improvements (autonomous)
-    if "critique" not in state:
-        print("\nStage 5/7: Evaluating improvement quality...")
-        state["critique"] = await evaluate_improvements(state["improvements"], state["diagnosis"])
-        save_state(state)
-        print("✓ Evaluation complete")
+    # Check if rejected
+    if result.get("status") == "rejected":
+        return result
 
-    # Stage 7: Synthesize final recommendations (autonomous)
-    if "synthesis" not in state:
-        print("Stage 6/7: Synthesizing final recommendations...")
-        state["synthesis"] = await synthesize_recommendations(
-            state["critique"], state["improvements"], state["diagnosis"]
-        )
-        save_state(state)
-        print("✓ Synthesis complete")
-
-    # CODE makes decision: Check quality, iterate if needed
-    quality_score = float(state["synthesis"].get("quality_score", 0))
-    iterations = state.get("iterations", 0)
-
-    print(f"\nQuality Score: {quality_score}")
-
-    if quality_score < 0.8 and iterations < 3:
-        print(f"Score below threshold. Iterating... (attempt {iterations + 1}/3)")
-        state["iterations"] = iterations + 1
-        # Clear stages that need regeneration
-        del state["improvements"]  # Regenerate with feedback
-        del state["human_approval"]  # Ask again
-        del state["critique"]  # Re-evaluate new improvements
-        del state["synthesis"]  # Re-synthesize with new evaluation
-        save_state(state)
-        return await evolve_tutorial(tutorial_path, focus_areas)
-
-    # Stage 8: Generate markdown report (in current directory, not tutorial directory)
+    # CLI-specific: Generate report file
     print("\nStage 7/7: Generating analysis report...")
     report_path = Path.cwd() / f"{tutorial_path.stem}_analysis.md"
-    _generate_report(state, tutorial_path, report_path)
+    _generate_report(result, tutorial_path, report_path)
     print(f"✓ Report saved to: {report_path}")
 
     print("\n✓ Tutorial analysis complete!")
-    return {"report_path": str(report_path), "quality_score": quality_score}
+    return {"report_path": str(report_path), "quality_score": result["synthesis"]["quality_score"]}
 
 
 def cli():

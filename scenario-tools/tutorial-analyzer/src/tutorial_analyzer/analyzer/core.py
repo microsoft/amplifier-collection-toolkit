@@ -11,20 +11,14 @@ Philosophy:
 - AmplifierSession is MECHANISM - kernel unchanged
 """
 
-from amplifier_collection_toolkit import create_standalone_session
+from amplifier_core import AmplifierSession
 
 from ..utils import extract_dict_from_response
 
 ANALYZER_CONFIG = {
     "session": {
-        "orchestrator": {
-            "module": "loop-basic",
-            "source": "git+https://github.com/microsoft/amplifier-module-loop-basic@main",
-        },
-        "context": {
-            "module": "context-simple",
-            "source": "git+https://github.com/microsoft/amplifier-module-context-simple@main",
-        },
+        "orchestrator": "loop-basic",
+        "context": "context-simple",
     },
     "providers": [
         {
@@ -47,6 +41,8 @@ Return JSON with keys: structure, sections, concepts, complexity, examples
             },
         }
     ],
+    "tools": [],
+    "hooks": [],
 }
 
 
@@ -71,7 +67,7 @@ Return JSON with:
 - examples: Code examples present (boolean)
 """
 
-    async with await create_standalone_session(config=ANALYZER_CONFIG) as session:
+    async with AmplifierSession(config=ANALYZER_CONFIG) as session:
         response = await session.execute(prompt)
 
     return extract_dict_from_response(response)

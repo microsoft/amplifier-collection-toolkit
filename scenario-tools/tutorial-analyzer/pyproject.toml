@@ -11,13 +11,14 @@ authors = [
 
 dependencies = [
     "amplifier-core",
-    "amplifier-module-resolution",
-    "toolkit",
-    "click>=8.1.0",
+    "amplifier-module-provider-anthropic",
+    "amplifier-module-loop-streaming",
+    "amplifier-module-loop-basic",
+    "amplifier-module-context-simple",
 ]
 
 [project.scripts]
-tutorial-analyzer = "tutorial_analyzer.main:cli"
+tutorial-analyzer = "tutorial_analyzer.cli:cli"
 
 [project.urls]
 Homepage = "https://github.com/microsoft/amplifier-collection-toolkit"
@@ -36,5 +37,8 @@ allow-direct-references = true
 
 [tool.uv.sources]
 amplifier-core = { git = "https://github.com/microsoft/amplifier-core", branch = "main" }
-amplifier-module-resolution = { git = "https://github.com/microsoft/amplifier-module-resolution", branch = "main" }
-toolkit = { git = "https://github.com/microsoft/amplifier-collection-toolkit", branch = "main" }
+amplifier-module-provider-anthropic = { git = "https://github.com/microsoft/amplifier-module-provider-anthropic", branch = "main" }
+amplifier-module-loop-streaming = { git = "https://github.com/microsoft/amplifier-module-loop-streaming", branch = "main" }
+amplifier-module-loop-basic = { git = "https://github.com/microsoft/amplifier-module-loop-basic", branch = "main" }
+amplifier-module-context-simple = { git = "https://github.com/microsoft/amplifier-module-context-simple", branch = "main" }
+amplifier-collection-toolkit = { git = "https://github.com/microsoft/amplifier-collection-toolkit", branch = "main" }

@@ -11,20 +11,14 @@ Philosophy:
 - AmplifierSession is MECHANISM - kernel unchanged
 """
 
-from amplifier_collection_toolkit import create_standalone_session
+from amplifier_core import AmplifierSession
 
 from ..utils import extract_dict_from_response
 
 SYNTHESIZER_CONFIG = {
     "session": {
-        "orchestrator": {
-            "module": "loop-basic",
-            "source": "git+https://github.com/microsoft/amplifier-module-loop-basic@main",
-        },
-        "context": {
-            "module": "context-simple",
-            "source": "git+https://github.com/microsoft/amplifier-module-context-simple@main",
-        },
+        "orchestrator": "loop-basic",
+        "context": "context-simple",
     },
     "providers": [
         {
@@ -46,6 +40,8 @@ Return JSON with keys: recommendations, implementation_order, quality_score
             },
         }
     ],
+    "tools": [],
+    "hooks": [],
 }
 
 
@@ -82,7 +78,7 @@ Return EXACTLY this JSON structure:
 Provide clear, prioritized recommendations. Quality score from 0.0 to 1.0.
 """
 
-    async with await create_standalone_session(config=SYNTHESIZER_CONFIG) as session:
+    async with AmplifierSession(config=SYNTHESIZER_CONFIG) as session:
         response = await session.execute(prompt)
 
     return extract_dict_from_response(response)
