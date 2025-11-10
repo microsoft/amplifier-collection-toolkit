@@ -300,7 +300,7 @@ The toolkit includes `tutorial_analyzer` as the pedagogical exemplar showing the
 ### Structure
 
 ```
-toolkit/examples/tutorial_analyzer/
+scenario-tools/tutorial_analyzer/
   main.py                     # Main orchestration
   state.py                    # State management
 
@@ -333,7 +333,7 @@ Analyze → Simulate Learner → Diagnose Issues →
 5. **Evaluative loops** - Re-simulate and score to decide if done
 6. **Complex flow control** - Nested loops, conditional jumps, context accumulation
 
-See `toolkit/examples/tutorial_analyzer/README.md` for complete documentation.
+See `scenario-tools/tutorial_analyzer/README.md` for complete documentation.
 
 ## Common Patterns
 
@@ -580,7 +580,7 @@ while True:
             state["stage"] = "IMPROVE"
 ```
 
-See `toolkit/METACOGNITIVE_RECIPES.md` for complete advanced flow control patterns.
+See `METACOGNITIVE_RECIPES.md` for complete advanced flow control patterns.
 
 ## Best Practices
 
@@ -754,11 +754,11 @@ The `tutorial_analyzer` example shows the complete pattern:
 - Evaluative loops with quality thresholds
 - Complex flow control (nested loops, conditional jumps)
 
-See `toolkit/examples/tutorial_analyzer/README.md` for complete documentation.
+See `scenario-tools/tutorial_analyzer/README.md` for complete documentation.
 
 ### 2. Review the Template
 
-Study `toolkit/templates/standalone_tool.py` to see:
+Study `templates/standalone_tool.py` to see:
 
 - How to structure multiple configs
 - How code orchestrates between configs
@@ -768,7 +768,7 @@ Study `toolkit/templates/standalone_tool.py` to see:
 
 ### 3. Understand Configuration Levels
 
-See `toolkit/METACOGNITIVE_RECIPES.md` for the configuration sophistication spectrum:
+See `METACOGNITIVE_RECIPES.md` for the configuration sophistication spectrum:
 
 - **Level 1: Fixed configs** (90% of tools) - Hardcoded, predictable
 - **Level 2: Code-modified configs** (8% of tools) - Adaptive within bounds
@@ -780,11 +780,11 @@ Start with Level 1 (fixed configs). Only advance to Level 2/3 when you need adap
 
 ```bash
 # Study the exemplar
-cd toolkit/examples/tutorial_analyzer
+cd scenario-tools/tutorial_analyzer
 cat README.md
 
 # Copy the template
-cp toolkit/templates/standalone_tool.py my_tool.py
+cp templates/standalone_tool.py my_tool.py
 
 # Customize:
 # 1. Define your specialized configs
@@ -793,7 +793,7 @@ cp toolkit/templates/standalone_tool.py my_tool.py
 # 4. Test with real inputs
 
 # Package for distribution
-# See toolkit/PACKAGING_GUIDE.md
+# See PACKAGING_GUIDE.md
 ```
 
 ## Troubleshooting
@@ -832,7 +832,7 @@ cp toolkit/templates/standalone_tool.py my_tool.py
 - Can complex routing be simplified?
 - Can subtasks become separate tools?
 
-See `toolkit/BEST_PRACTICES.md` for decomposition strategies.
+See `BEST_PRACTICES.md` for decomposition strategies.
 
 ## Summary
 
@@ -854,9 +854,9 @@ Build tools that:
 
 **Next steps**:
 
-1. Study `toolkit/examples/tutorial_analyzer/` - Complete working exemplar
-2. Read `toolkit/METACOGNITIVE_RECIPES.md` - Deep dive on patterns
-3. Read `toolkit/HOW_TO_CREATE_YOUR_OWN.md` - Step-by-step creation guide
-4. Read `toolkit/BEST_PRACTICES.md` - Strategic guidance
+1. Study `scenario-tools/tutorial_analyzer/` - Complete working exemplar
+2. Read `METACOGNITIVE_RECIPES.md` - Deep dive on patterns
+3. Read `HOW_TO_CREATE_YOUR_OWN.md` - Step-by-step creation guide
+4. Read `BEST_PRACTICES.md` - Strategic guidance
 
 **Remember**: The toolkit teaches patterns, not prescriptions. Use these ideas to build tools that solve YOUR problems in YOUR way.

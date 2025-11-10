@@ -901,7 +901,7 @@ The `tutorial_analyzer` in the toolkit is the pedagogical exemplar. Study it to 
 - HOW_TO_BUILD.md - Builder guide
 - Inline comments explaining recipe
 
-See: `amplifier-collection-toolkit/examples/tutorial_analyzer/`
+See: `amplifier-collection-scenario-tools/tutorial_analyzer/`
 
 ---
 
@@ -1143,20 +1143,20 @@ uv tool uninstall my-analyzer
 
 **1. Study the exemplar**:
 
-- Read: `amplifier-collection-toolkit/examples/tutorial_analyzer/README.md`
+- Read: `amplifier-collection-scenario-tools/tutorial_analyzer/README.md`
 - Understand: Multi-config pattern, state management, flow control
 - Run: Test with sample tutorials
 
 **2. Review the template**:
 
-- Read: `amplifier-collection-toolkit/templates/standalone_tool.py`
+- Read: `amplifier-collection-templates/standalone_tool.py`
 - Understand: Basic structure, config definition, orchestration
 
 **3. Read advanced guides**:
 
 - [TOOLKIT_GUIDE.md](TOOLKIT_GUIDE.md) - Complete toolkit reference
-- `toolkit/METACOGNITIVE_RECIPES.md` - Advanced patterns
-- `toolkit/HOW_TO_CREATE_YOUR_OWN.md` - Step-by-step creation
+- `METACOGNITIVE_RECIPES.md` - Advanced patterns
+- `HOW_TO_CREATE_YOUR_OWN.md` - Step-by-step creation
 
 **4. Build your own**:
 
