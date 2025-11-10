@@ -722,7 +722,7 @@ if score < 0.8:
 
 ### Example: Tutorial Improvement Tool
 
-See `scenario-tools/tutorial_analyzer/` for complete implementation showing:
+See `scenario-tools/tutorial-analyzer/` for complete implementation showing:
 
 - 6 specialized configs (each optimized)
 - Multi-stage orchestration (code manages flow)
@@ -756,7 +756,7 @@ See `scenario-tools/tutorial_analyzer/` for complete implementation showing:
 
 **Next steps**:
 
-1. Study `scenario-tools/tutorial_analyzer/` - See all practices in action
+1. Study `scenario-tools/tutorial-analyzer/` - See all practices in action
 2. Read `METACOGNITIVE_RECIPES.md` - Understand patterns deeply
 3. Read `HOW_TO_CREATE_YOUR_OWN.md` - Build your own tool
 4. Start simple, iterate, learn from each tool you build

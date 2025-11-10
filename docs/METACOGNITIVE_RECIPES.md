@@ -673,7 +673,7 @@ async def evolve_tutorial(tutorial_path: Path):
 - **Evaluative loops** - Re-generate if quality threshold not met
 - **State management** - Track progress, enable iteration
 
-See `scenario-tools/tutorial_analyzer/README.md` for complete documentation.
+See `scenario-tools/tutorial-analyzer/README.md` for complete documentation.
 
 ## Advanced Flow Control Patterns
 
@@ -946,7 +946,7 @@ If quality is high, move to next stage.
 
 **Next steps**:
 
-1. Study `scenario-tools/tutorial_analyzer/` - Complete exemplar
+1. Study `scenario-tools/tutorial-analyzer/` - Complete exemplar
 2. Read `HOW_TO_CREATE_YOUR_OWN.md` - Step-by-step guide
 3. Read `BEST_PRACTICES.md` - Strategic guidance
 4. Start with Level 1 fixed configs - Don't over-engineer!

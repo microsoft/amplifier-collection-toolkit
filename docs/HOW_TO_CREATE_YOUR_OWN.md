@@ -411,7 +411,7 @@ These insights feed back into your next tool. You're not just building tools; yo
 
 To deepen your understanding and improve your recipe-writing skills, study the examples in this toolkit:
 
-- **tutorial_analyzer** (`scenario-tools/tutorial_analyzer/`) - Complete pedagogical exemplar
+- **tutorial_analyzer** (`scenario-tools/tutorial-analyzer/`) - Complete pedagogical exemplar
 
   - 6 specialized configs (analyzer, learner_simulator, diagnostician, improver, critic, synthesizer)
   - Multi-stage orchestration with human-in-loop

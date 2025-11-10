@@ -797,7 +797,7 @@ typeCheckingMode = "basic"
 - Main orchestrates across stages
 - State management for resumability
 
-See `scenario-tools/tutorial_analyzer/` for complete working example ready for packaging.
+See `scenario-tools/tutorial-analyzer/` for complete working example ready for packaging.
 
 **Next steps**:
 

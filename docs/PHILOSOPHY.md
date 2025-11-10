@@ -693,7 +693,7 @@ This is the essence of ruthless simplicity: simple pieces, clear composition.
 
 **Next steps**:
 
-1. Study `scenario-tools/tutorial_analyzer/` - See multi-config in action
+1. Study `scenario-tools/tutorial-analyzer/` - See multi-config in action
 2. Read `METACOGNITIVE_RECIPES.md` - Understand pattern deeply
 3. Read `HOW_TO_CREATE_YOUR_OWN.md` - Build your own tool
 4. Start with Level 1 - Don't over-engineer!

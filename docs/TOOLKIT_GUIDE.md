@@ -300,7 +300,7 @@ The toolkit includes `tutorial_analyzer` as the pedagogical exemplar showing the
 ### Structure
 
 ```
-scenario-tools/tutorial_analyzer/
+scenario-tools/tutorial-analyzer/
   main.py                     # Main orchestration
   state.py                    # State management
 
@@ -333,7 +333,7 @@ Analyze → Simulate Learner → Diagnose Issues →
 5. **Evaluative loops** - Re-simulate and score to decide if done
 6. **Complex flow control** - Nested loops, conditional jumps, context accumulation
 
-See `scenario-tools/tutorial_analyzer/README.md` for complete documentation.
+See `scenario-tools/tutorial-analyzer/README.md` for complete documentation.
 
 ## Common Patterns
 
@@ -754,7 +754,7 @@ The `tutorial_analyzer` example shows the complete pattern:
 - Evaluative loops with quality thresholds
 - Complex flow control (nested loops, conditional jumps)
 
-See `scenario-tools/tutorial_analyzer/README.md` for complete documentation.
+See `scenario-tools/tutorial-analyzer/README.md` for complete documentation.
 
 ### 2. Review the Template
 
@@ -854,7 +854,7 @@ Build tools that:
 
 **Next steps**:
 
-1. Study `scenario-tools/tutorial_analyzer/` - Complete working exemplar
+1. Study `scenario-tools/tutorial-analyzer/` - Complete working exemplar
 2. Read `METACOGNITIVE_RECIPES.md` - Deep dive on patterns
 3. Read `HOW_TO_CREATE_YOUR_OWN.md` - Step-by-step creation guide
 4. Read `BEST_PRACTICES.md` - Strategic guidance

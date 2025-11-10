@@ -87,7 +87,7 @@ uvx --from my-collection my-analyzer [args]
 ### Directory Structure
 
 ```
-scenario-tools/tutorial_analyzer/
+scenario-tools/tutorial-analyzer/
   # Entry point
   main.py                     # CLI interface, orchestration logic
 
@@ -901,7 +901,7 @@ The `tutorial_analyzer` in the toolkit is the pedagogical exemplar. Study it to 
 - HOW_TO_BUILD.md - Builder guide
 - Inline comments explaining recipe
 
-See: `amplifier-collection-scenario-tools/tutorial_analyzer/`
+See: `amplifier-collection-scenario-tools/tutorial-analyzer/`
 
 ---
 
@@ -1143,7 +1143,7 @@ uv tool uninstall my-analyzer
 
 **1. Study the exemplar**:
 
-- Read: `amplifier-collection-scenario-tools/tutorial_analyzer/README.md`
+- Read: `amplifier-collection-scenario-tools/tutorial-analyzer/README.md`
 - Understand: Multi-config pattern, state management, flow control
 - Run: Test with sample tutorials
 
