@@ -1,8 +1,8 @@
-# Amplifier-Dev Toolkit Guide
+# Amplifier Toolkit Guide
 
 ## Philosophy: Metacognitive Recipes with Multi-Config Patterns
 
-The **amplifier-dev-toolkit** teaches you how to build sophisticated AI tools using **metacognitive recipes** - orchestrated thinking processes where code manages workflow and multiple specialized AI configs handle different cognitive subtasks.
+The **amplifier-collection-toolkit** teaches you how to build sophisticated AI tools using **metacognitive recipes** - orchestrated thinking processes where code manages workflow and multiple specialized AI configs handle different cognitive subtasks.
 
 **Core Principle**: Code for orchestration, specialized configs for cognition
 

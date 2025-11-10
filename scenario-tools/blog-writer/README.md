@@ -332,4 +332,4 @@ Found a bug? Have an improvement? This tool follows the "describe what you want"
 
 ## License
 
-MIT License - see LICENSE file in amplifier-dev repository
+MIT License - see LICENSE file in the repository

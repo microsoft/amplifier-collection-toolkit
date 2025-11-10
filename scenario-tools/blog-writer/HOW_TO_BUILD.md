@@ -2,7 +2,7 @@
 
 **You don't need to be a programmer. You just need to describe what you want.**
 
-This document shows you how the Blog Writer tool was created with minimal input, so you can create your own tools the same way using the amplifier-dev pattern.
+This document shows you how the Blog Writer tool was created with minimal input, so you can create your own tools the same way using Amplifier's modular pattern.
 
 ---
 
