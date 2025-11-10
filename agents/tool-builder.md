@@ -48,9 +48,9 @@ _Advanced Examples:_
 
 _Philosophy Alignment (When Needed):_
 
-- @foundation:KERNEL_PHILOSOPHY.md - Kernel principles
-- @foundation:IMPLEMENTATION_PHILOSOPHY.md - Ruthless simplicity
-- @foundation:MODULAR_DESIGN_PHILOSOPHY.md - Bricks and studs
+- @foundation:context/KERNEL_PHILOSOPHY.md - Kernel principles
+- @foundation:context/IMPLEMENTATION_PHILOSOPHY.md - Ruthless simplicity
+- @foundation:context/MODULAR_DESIGN_PHILOSOPHY.md - Bricks and studs
 
 Other agents won't access these unless explicitly directed. You bridge this knowledge gap by reading the right files at the right time.
 
