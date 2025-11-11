@@ -161,47 +161,14 @@ Multi-config patterns allow each stage to use the optimal configuration.
 
 ## Philosophy
 
-This collection embodies several key principles:
+Core principles:
 
-### Multi-Config Patterns (Not Single-Config)
+- **Multi-config patterns**: Specialized configs for different cognitive tasks (not one compromise config)
+- **Structural utilities only**: File operations, progress, validation (NOT AmplifierSession wrappers)
+- **Tool-owned state**: Each tool manages its own checkpointing (no state frameworks)
+- **Ruthless simplicity**: Start minimal, YAGNI, code for structure/AI for intelligence
 
-**GOOD**: Multiple specialized configs for different thinking
-```python
-ANALYZER_CONFIG = {"temperature": 0.3, ...}   # Analytical
-IMPROVER_CONFIG = {"temperature": 0.7, ...}    # Creative
-CRITIC_CONFIG = {"temperature": 0.2, ...}      # Evaluative
-```
-
-**BAD**: One config trying to do everything
-```python
-GENERIC_CONFIG = {"temperature": 0.5, ...}  # Compromises all tasks
-```
-
-### Structural Utilities Only
-
-**Provides**:
-- File discovery, progress reporting, validation (✅)
-
-**Does NOT provide**:
-- Session wrappers around AmplifierSession (❌)
-- Generic state management frameworks (❌)
-- LLM response parsing utilities (❌)
-
-**Use AmplifierSession directly** with specialized configs.
-
-### Each Tool Owns Its State
-
-Tools manage their own state and checkpointing:
-- No state management frameworks
-- Simple, explicit state files (JSON)
-- Checkpointing after expensive operations
-
-### Ruthless Simplicity
-
-- Start minimal, add complexity only when needed
-- YAGNI (You Aren't Gonna Need It)
-- Code for structure, AI for intelligence
-- Clear over clever
+See [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) for complete philosophical rationale.
 
 ---
 

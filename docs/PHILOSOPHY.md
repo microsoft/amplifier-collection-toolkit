@@ -13,82 +13,24 @@ Standalone tools built with this toolkit are **policy-making edges** in the Ampl
 
 ### The Single-Config Limitation
 
-**Attempt**: One config tries to handle all cognitive tasks
-
-```python
-GENERIC_CONFIG = {
-    "providers": [{
-        "config": {
-            "model": "claude-sonnet-4-5",
-            "temperature": 0.5,  # Compromise
-            "system_prompt": "You are a helpful assistant."  # Generic
-        }
-    }]
-}
-
-# Use for everything
-async with AmplifierSession(config=GENERIC_CONFIG) as session:
-    analysis = await session.execute("Analyze this...")
-    creation = await session.execute("Create from this...")
-    evaluation = await session.execute("Evaluate this...")
-```
+One config attempts to serve all cognitive tasks - analysis (needs precision), creation (needs creativity), evaluation (needs consistency).
 
 **Problems**:
 
-- **Temperature compromise**: Can't optimize for precision (analysis) AND creativity (generation)
+- **Temperature compromise**: Can't optimize for precision (temp=0.3) AND creativity (temp=0.7)
 - **Attention dilution**: Generic prompt not optimized for any specific task
 - **Context pollution**: All tasks share one session, context accumulates
 - **Failure cascade**: One mistake affects all subsequent tasks
 
 ### The Multi-Config Solution
 
-**Approach**: Specialized config per cognitive subtask
+Each cognitive subtask gets its own optimized configuration:
 
-```python
-ANALYZER_CONFIG = {
-    "providers": [{
-        "config": {
-            "model": "claude-sonnet-4-5",
-            "temperature": 0.3,  # Optimized for precision
-            "system_prompt": "You are an expert content analyzer..."  # Focused
-        }
-    }]
-}
+- **Analytical config** (temp=0.3): Structure extraction, classification
+- **Creative config** (temp=0.7): Content generation, ideation
+- **Evaluative config** (temp=0.2): Quality assessment, scoring
 
-CREATOR_CONFIG = {
-    "providers": [{
-        "config": {
-            "model": "claude-opus-4-1",
-            "temperature": 0.7,  # Optimized for creativity
-            "system_prompt": "You are a creative content generator..."  # Focused
-        }
-    }]
-}
-
-EVALUATOR_CONFIG = {
-    "providers": [{
-        "config": {
-            "model": "claude-sonnet-4-5",
-            "temperature": 0.2,  # Optimized for consistency
-            "system_prompt": "You are a quality evaluator..."  # Focused
-        }
-    }]
-}
-
-# Code orchestrates
-async def sophisticated_tool():
-    # Each session optimized for its task
-    async with AmplifierSession(config=ANALYZER_CONFIG) as session:
-        analysis = await session.execute(...)  # Precise analysis
-
-    async with AmplifierSession(config=CREATOR_CONFIG) as session:
-        creation = await session.execute(...)  # Creative generation
-
-    async with AmplifierSession(config=EVALUATOR_CONFIG) as session:
-        evaluation = await session.execute(...)  # Consistent evaluation
-
-    return creation
-```
+Code orchestrates which config to use when, managing flow between specialized sessions.
 
 **Benefits**:
 
@@ -97,60 +39,32 @@ async def sophisticated_tool():
 - **Fresh context**: Each stage starts clean
 - **Isolated failures**: One stage failing doesn't kill the rest
 
+For implementation examples, see [TOOLKIT_GUIDE.md - The Multi-Config Pattern](TOOLKIT_GUIDE.md#the-multi-config-pattern).
+
 ## Alignment with Kernel Philosophy
 
 ### Mechanism Not Policy
 
-**Kernel provides mechanism**:
-
-```python
-# AmplifierSession: mechanism to execute with ANY config
-async with AmplifierSession(config=ANY_CONFIG) as session:
-    response = await session.execute(prompt)
-```
+**Kernel provides mechanism**: `AmplifierSession` executes with any config provided.
 
 **Tool makes policy decisions**:
-
-```python
-# Tool decides:
-# - Which model (haiku, sonnet, opus)
-# - What temperature (0.1, 0.5, 0.8)
-# - Which orchestrator (basic, streaming)
-# - What system prompt
-# - When to use which config
-# - How to combine results
-# - When to loop or iterate
-
-ANALYZER_CONFIG = {"temperature": 0.3}   # Policy decision
-CREATOR_CONFIG = {"temperature": 0.7}     # Policy decision
-```
+- Which model (haiku, sonnet, opus)
+- What temperature (0.1, 0.5, 0.8)
+- Which orchestrator (basic, streaming)
+- What system prompt
+- When to use which config
+- How to combine results
+- When to loop or iterate
 
 The kernel doesn't care. It just executes. **This is correct.**
 
 ### Policy at Edges
 
-Standalone tools **ARE** the edges. They make all policy decisions:
-
-```python
-# Tool decides everything about its behavior
-CONFIGS = {
-    "analyzer": {"temperature": 0.3, "model": "claude-sonnet-4-5"},
-    "creator": {"temperature": 0.7, "model": "claude-opus-4-1"},
-    "evaluator": {"temperature": 0.2, "model": "claude-sonnet-4-5"},
-}
-
-# Code decides flow
-if analysis_result.needs_research:
-    # Jump to research flow with different config
-    config = CONFIGS["researcher"]
-else:
-    # Skip to creation
-    config = CONFIGS["creator"]
-
-async with AmplifierSession(config=config) as session:
-    # Kernel executes policy decided by tool
-    result = await session.execute(...)
-```
+Standalone tools **ARE** the edges. They make all policy decisions about their behavior:
+- Define multiple specialized configs (analytical, creative, evaluative)
+- Decide flow based on results (if needs research → use research config, else → use creator config)
+- Manage their own state and checkpointing
+- Determine when to involve humans
 
 No one else decides for you. **This is correct.**
 
@@ -196,43 +110,21 @@ The center stays still so the edges can move fast. **This is correct.**
 
 ### Standalone Tools Make Build-Time Decisions
 
-**CLI applications** (like `amplifier`) allow users to choose behavior at runtime:
+**CLI applications** (like `amplifier`) allow users to choose behavior at runtime through profiles and flags.
 
-```bash
-# User chooses profile at runtime
-amplifier run --profile dev "research AI safety"
-amplifier run --profile production "research AI safety"
-```
-
-**Standalone tools** make policy decisions at **build time**:
-
-```python
-# Tool author decides configs when building tool
-ANALYZER_CONFIG = {
-    "session": {"orchestrator": "loop-basic"},
-    "providers": [{
-        "module": "provider-anthropic",
-        "source": "git+https://github.com/microsoft/amplifier-module-provider-anthropic@main",
-        "config": {"model": "claude-sonnet-4-5", "temperature": 0.3}
-    }]
-}  # Build-time decision - no runtime user choice
-```
+**Standalone tools** make policy decisions at **build time** - the tool author decides which models, temperatures, and orchestration patterns to use. Users invoke the tool but don't configure its internal choices.
 
 ### Standalone Tools Are Opinionated
 
-Each standalone tool is a **specific solution** to a **specific problem** with **specific choices**:
+Each standalone tool is a **specific solution** to a **specific problem** with **specific choices baked in**:
 
-```python
-# Tutorial evolver's build-time choices:
-# - Use claude-sonnet-4-5 for analysis (not opus, not haiku)
-# - Use temperature 0.3 for analysis (not 0.5, not 0.1)
-# - Use 6 configs (not 3, not 10)
-# - Simulate learner perspective (not skip it)
-# - Require human approval for improvements (not autonomous)
+- Which models (sonnet vs opus vs haiku)
+- Which temperatures (0.1 vs 0.5 vs 0.8)
+- How many configs (2 vs 6 vs 10)
+- Which cognitive stages (simulate learner? skip simulation?)
+- When humans approve (autonomous vs gated)
 
-# These are POLICY DECISIONS made by tool author
-# Not runtime choices for users
-```
+These are **policy decisions made by tool author**, not runtime choices for users.
 
 Users who want different behavior create **different tools**. No dynamic configuration needed.
 

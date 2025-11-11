@@ -627,89 +627,9 @@ my-tool input.md
 uvx --from git+https://github.com/you/my-tool@main my-tool input.md
 ```
 
-## Multi-Config Tools
+## Multi-Config Tool Structure
 
-For tools with multiple specialized configs, organize by cognitive stage:
-
-```
-src/my_tool/
-  main.py              # Orchestration
-
-  # Each stage = module with config
-  stage1_analyzer/
-    __init__.py
-    core.py            # ANALYZER_CONFIG = {...}
-
-  stage2_creator/
-    __init__.py
-    core.py            # CREATOR_CONFIG = {...}
-
-  stage3_evaluator/
-    __init__.py
-    core.py            # EVALUATOR_CONFIG = {...}
-```
-
-**In each core.py**:
-
-```python
-"""Stage N: Description of cognitive task."""
-
-from amplifier_core import AmplifierSession
-
-STAGE_N_CONFIG = {
-    "session": {"orchestrator": "loop-basic"},
-    "providers": [{
-        "module": "provider-anthropic",
-        "source": "git+https://github.com/...",
-        "config": {
-            "model": "claude-sonnet-4-5",
-            "temperature": 0.3,  # Optimized for this stage
-            "system_prompt": "Stage-specific instructions..."
-        }
-    }]
-}
-
-async def process_stage_n(input_data: str) -> dict:
-    """Execute stage N processing."""
-    async with AmplifierSession(config=STAGE_N_CONFIG) as session:
-        result = await session.execute(f"Process: {input_data}")
-    return result
-```
-
-**In main.py**:
-
-```python
-"""Main orchestration across stages."""
-
-from .stage1_analyzer.core import process_stage_1
-from .stage2_creator.core import process_stage_2
-from .stage3_evaluator.core import process_stage_3
-from .state import load_state, save_state
-
-
-async def main(input_path: Path):
-    """Orchestrate multi-stage pipeline."""
-    state = load_state()
-
-    # Stage 1
-    if "stage1" not in state:
-        state["stage1"] = await process_stage_1(...)
-        save_state(state)
-
-    # Stage 2
-    if "stage2" not in state:
-        state["stage2"] = await process_stage_2(state["stage1"])
-        save_state(state)
-
-    # Stage 3
-    if "stage3" not in state:
-        state["stage3"] = await process_stage_3(state["stage2"])
-        save_state(state)
-
-    return state["stage3"]
-```
-
-Clean separation: each stage self-contained, main.py orchestrates.
+For tool structure patterns, see [SCENARIO_TOOLS_GUIDE.md - Anatomy of a Scenario Tool](SCENARIO_TOOLS_GUIDE.md#anatomy-of-a-scenario-tool).
 
 ## Example pyproject.toml (Complete)
 

@@ -505,82 +505,7 @@ async def implement_with_human_approval(task_description: str):
 
 ## Advanced Flow Control
 
-Metacognitive recipes support arbitrarily complex flow control. Code can implement sophisticated thinking patterns including nested loops, conditional jumps, and context-carrying state transitions.
-
-### Nested Evaluation Loops
-
-```python
-# Outer loop: Overall quality improvement
-for overall_iteration in range(max_overall_iterations):
-
-    # Inner loop: Section-by-section refinement
-    for section in tutorial.sections:
-        async with AmplifierSession(config=SECTION_ANALYZER) as session:
-            issues = await session.execute(f"Analyze section: {section}")
-
-        if has_critical_issues(issues):
-            # Jump to specialized repair flow
-            section = await repair_critical_section(section, issues)
-
-        # Inner quality check
-        score = await evaluate_section(section)
-        if score < threshold:
-            # Re-analyze with different config
-            async with AmplifierSession(config=DEEP_ANALYZER) as session:
-                deep_issues = await session.execute(f"Deep analyze: {section}")
-            section = await apply_fixes(section, deep_issues)
-
-    # Outer quality check after all sections refined
-    overall_score = await evaluate_tutorial(tutorial)
-    if overall_score > target:
-        break  # Exit outer loop early
-```
-
-### Conditional Jump with Context (Goto-Style)
-
-```python
-# State tracks current stage and jump context
-state = {
-    "stage": "ANALYZE",
-    "context": {},
-    "return_to": None,  # For goto-style returns
-}
-
-while True:
-    if state["stage"] == "ANALYZE":
-        analysis = await analyze(tutorial)
-        state["context"]["analysis"] = analysis
-
-        # Conditional jump based on analysis
-        if analysis["has_code_examples"]:
-            state["stage"] = "VERIFY_CODE"  # Jump to code verification
-            state["return_to"] = "DIAGNOSE"  # Remember where to return
-        else:
-            state["stage"] = "DIAGNOSE"  # Skip code verification
-
-    elif state["stage"] == "VERIFY_CODE":
-        code_issues = await verify_code_examples(
-            tutorial,
-            state["context"]["analysis"]  # Context from earlier stage
-        )
-        state["context"]["code_issues"] = code_issues
-        state["stage"] = state["return_to"]  # Goto DIAGNOSE
-
-    elif state["stage"] == "DIAGNOSE":
-        diagnosis = await diagnose(
-            tutorial,
-            analysis=state["context"]["analysis"],
-            code_issues=state["context"].get("code_issues")  # May or may not exist
-        )
-
-        # Conditional jump based on diagnosis severity
-        if diagnosis["severity"] == "critical":
-            state["stage"] = "EMERGENCY_REWRITE"
-        else:
-            state["stage"] = "IMPROVE"
-```
-
-See `METACOGNITIVE_RECIPES.md` for complete advanced flow control patterns.
+For advanced patterns (nested loops, state machines, conditional jumps), see [METACOGNITIVE_RECIPES.md](METACOGNITIVE_RECIPES.md).
 
 ## Best Practices
 
@@ -673,73 +598,9 @@ async def robust_multi_stage(input_path: Path):
     }
 ```
 
-## Philosophy Deep Dive
+## Philosophy
 
-### Why Multi-Config?
-
-**Different cognitive tasks need different cognitive setups.**
-
-Just like humans, AI performs different kinds of thinking:
-
-- **Analytical thinking** (temp=0.3): Breaking down structure, classifying, extracting patterns
-- **Empathetic thinking** (temp=0.5): Simulating perspectives, understanding users
-- **Creative thinking** (temp=0.7): Generating novel content, exploring possibilities
-- **Evaluative thinking** (temp=0.2): Judging quality, scoring, critiquing
-
-**One config can't optimize for all of these.** Multi-config pattern lets you optimize each cognitive subtask independently.
-
-### Why Code Orchestration?
-
-**Code is better than AI at:**
-
-- Flow control (loops, conditionals, state machines)
-- State management (checkpointing, resumability)
-- Deterministic decisions (thresholds, routing)
-- Human interaction (approval gates, feedback loops)
-
-**AI is better than code at:**
-
-- Understanding natural language
-- Pattern recognition in unstructured data
-- Generating natural language
-- Reasoning about complex domains
-
-**Metacognitive recipes** use each for what it does best: code orchestrates thinking, specialized AI configs do the thinking.
-
-### Why Not One Big Prompt?
-
-**Alternative**: One huge prompt with all instructions
-
-**Problems**:
-
-- Attention dilution (model tries to do everything at once)
-- Temperature compromise (can't optimize for each subtask)
-- Context overflow (all context must fit in one window)
-- Brittle (one failure kills entire flow)
-- Unresumable (can't checkpoint between stages)
-
-**Multi-config approach**:
-
-- Focused attention (each session has one job)
-- Optimized temperature (per cognitive role)
-- Unlimited context (each stage starts fresh)
-- Resilient (failures isolated to one stage)
-- Resumable (checkpoint after every stage)
-
-### Mechanism vs Policy
-
-The toolkit provides **mechanisms** (capabilities):
-
-- **Mechanism**: "Here's how to discover files recursively"
-- **NOT Policy**: "You must process files in alphabetical order"
-
-- **Mechanism**: "Here's how to create sessions with different configs"
-- **NOT Policy**: "You must use exactly 6 configs"
-
-- **Mechanism**: "Here's how to track progress"
-- **NOT Policy**: "You must report every 10 items"
-
-**Tools decide policies for their specific needs.**
+For philosophical rationale (why multi-config, why code orchestration, mechanism vs policy), see [PHILOSOPHY.md](PHILOSOPHY.md).
 
 ## Getting Started
 
