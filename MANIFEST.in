@@ -9,12 +9,14 @@ include pyproject.toml
 # Collection resources
 recursive-include agents *
 recursive-include profiles *
+recursive-include context *
 recursive-include scenario-tools *
 recursive-include templates *
 recursive-include docs *
 recursive-include amplifier_collection_toolkit *.py *.toml
 graft agents
 graft profiles
+graft context
 graft scenario-tools
 graft templates
 graft docs
