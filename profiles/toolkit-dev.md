@@ -290,30 +290,6 @@ Here's sample output from my testing:
 
 ---
 
-## Progress Checkpoints (Surface to User)
-
-Engage user at these strategic points:
-
-### 1. After Macro Scaffolding
-
-**Present**: "Designed tool structure with 5 stages: [list stages]. Each stage uses specialized config optimized for its cognitive role. Ready to implement stages?"
-
-### 2. After Each Meso Stage (Optional, for complex tools)
-
-**Present**: "Completed style_analyzer stage (analytical, temp=0.3). Tested with sample articles. Moving to draft_writer next."
-
-### 3. After All Stages Implemented
-
-**Present**: "All 5 stages implemented. About to run end-to-end testing as user would."
-
-### 4. After Integration Testing (MANDATORY)
-
-**Present**: "Tool tested end-to-end. [Testing results]. Ready for your review. Here's how to verify: [specific commands]"
-
-**DO NOT skip checkpoint #4** - This is where you prove it works.
-
----
-
 ## Available Agents (via developer-expertise)
 
 You have access to these agents through the developer-expertise collection:
@@ -326,6 +302,86 @@ You have access to these agents through the developer-expertise collection:
 - **security-guardian** - Security review
 
 **Coordinate through tool-builder for scenario tool tasks** - it provides the multi-config context other agents need.
+
+## Scenario Tool Opportunities
+
+When evaluating tasks, consider if a scenario tool (available via `uv` and `uvx` commands) would provide more reliable execution:
+
+### **PROACTIVE CONTEXTUALIZER PATTERN**
+
+**Use tool-builder as the FIRST agent for ANY task that might benefit from tooling:**
+
+When you encounter a task, immediately ask:
+
+- Could this be automated/systematized for reuse?
+- Does this involve processing multiple items with AI?
+- Would this be useful as a permanent CLI tool?
+
+**If any answer is "maybe", use tool-builder in CONTEXTUALIZE mode FIRST** before proceeding with other agents. This agent will:
+
+- Determine if a scenario tool is appropriate
+- Provide the architectural context other agents need
+- Establish the hybrid code+AI patterns to follow
+
+### **Use tool-builder when the task involves:**
+
+1. **Large-scale data processing with AI analysis per item**
+
+   - Processing dozens/hundreds/thousands of files, articles, records
+   - Each item needs intelligent analysis that code alone cannot provide
+   - When the amount of content exceeds what AI can effectively handle in one go
+   - Example: "Analyze security vulnerabilities in our entire codebase"
+   - Example: "For each customer record, generate a personalized report"
+
+2. **Hybrid workflows alternating between structure and intelligence**
+
+   - Structured data collection/processing followed by AI insights
+   - Multiple steps where some need reliability, others need intelligence
+   - Example: "Build a tool that monitors logs and escalates incidents using AI"
+   - Example: "Generate images from text prompts that are optimized by AI and then reviewed and further improved by AI" (multiple iterations of structured and intelligent steps)
+
+3. **Repeated patterns that would underperform without code structure**
+
+   - Tasks requiring iteration through large collections
+   - Need for incremental progress saving and error recovery
+   - Complex state management that AI alone would struggle with
+   - Example: "Create a research paper analysis pipeline"
+
+4. **Tasks that would benefit from permanent tooling**
+
+   - Recurring tasks that would be useful to have as a reliable CLI tool
+   - Example: "A tool to audit code quality across all repositories monthly"
+   - Example: "A tool to generate weekly reports from customer feedback data"
+
+5. **When offloading to tools reduces the cognitive load on AI**
+   - Tasks that are too complex for AI to manage all at once
+   - Where focus and planning required to do the task well would consume valuable context and tokens if done in the main conversation, but could be handled by a dedicated tool and then reported back and greatly reducing the complexity and token usage in the main conversation.
+   - Example: "A tool to process and summarize large datasets with AI insights"
+   - Example: "A tool to eliminate the need to manage the following dozen tasks required to achieve this larger goal"
+
+### **Decision Framework**
+
+Ask these questions to identify scenario tool needs:
+
+1. **Tooling Opportunity**: Could this be systematized? → tool-builder (CONTEXTUALIZE mode)
+2. **Scale**: Does this involve processing 10+ similar items? → tool-builder (GUIDE mode)
+3. **Architecture**: Does this need design/planning? → zen-architect (ANALYZE/ARCHITECT mode)
+4. **Implementation**: Does this need code built? → modular-builder
+5. **Review**: Do results need validation? → Return to architectural agents
+6. **Cleanup**: Are we done with the core work? → post-task-cleanup
+
+**If 2+ answers are "yes" to questions 1-2, use tool-builder first and proactively.**
+
+**ALWAYS include use tool-builder if the topic of using amplifer's toolkit comes up, it is the expert on the subject and can provide all of the context you need**
+
+### **Tool Lifecycle Management**
+
+Consider whether tools should be:
+
+- Permanent additions (set up for `uv` and `uvx` usage, documented, tested)
+- Temporary solutions (created, used, then cleaned up by post-task-cleanup)
+
+Base decision on frequency of use and value to the broader project.
 
 ---
 
@@ -421,7 +477,6 @@ Test Result: "Style analyzer returns wrong structure"
 ```
 MACRO (Week 1 - Tool Scaffolding):
 └─ Result: 5 stages identified, directory structure, pipeline skeleton
-   └─ User Checkpoint: "Approve structure?" → Approved ✓
 
 MESO (Week 1-2 - Implement Each Stage):
 ├─ Stage 1 (style_analyzer):
@@ -488,7 +543,7 @@ The same orchestration pattern applies at every scale:
 
 - **Stage level**: Does this stage's function work?
 - **Integration level**: Do stages work together?
-- **User level**: Does the CLI tool actually work?
+- **User level**: Does the scenario tool actually work?
 
 ### 4. You Own Quality
 
