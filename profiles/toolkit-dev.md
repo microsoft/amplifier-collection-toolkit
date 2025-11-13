@@ -11,7 +11,7 @@ profile:
 This profile optimizes for building sophisticated scenario tools using multi-config metacognitive recipes.
 
 @toolkit:context/shared/toolkit-agent-base.md
-@foundation:context/shared/common-agent-base.md
+@foundation:context/shared/common-profile-base.md
 
 **YOUR RESPONSIBILITY**: Own end-to-end quality. Test tools as a user would before presenting as complete.
 
