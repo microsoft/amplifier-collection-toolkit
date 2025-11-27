@@ -10,16 +10,17 @@ def test_state_manager(tmp_path):
     # Create state manager
     manager = StateManager(session_dir)
 
-    # Check initial state
+    # Check initial state (in-memory, not yet persisted)
     assert manager.state.stage == "initialized"
     assert manager.state.iteration == 0
     assert session_dir.exists()
-    assert (session_dir / "state.json").exists()
+    # Note: state.json is created lazily on first save(), not on init
 
-    # Update draft
+    # Update draft (this triggers save)
     manager.update_draft("# Test Draft\n\nContent here")
     assert manager.state.current_draft == "# Test Draft\n\nContent here"
     assert (session_dir / "draft_iter_0.md").exists()
+    assert (session_dir / "state.json").exists()  # Now state.json should exist
 
     # Add iteration history
     manager.add_iteration_history({"type": "test_operation", "data": "test"})
