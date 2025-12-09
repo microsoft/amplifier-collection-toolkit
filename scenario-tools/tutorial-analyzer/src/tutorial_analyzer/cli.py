@@ -23,7 +23,7 @@ from .state import save_state
 
 def _generate_report(state: dict, tutorial_path: Path, report_path: Path) -> None:
     """Generate comprehensive markdown analysis report."""
-    with open(report_path, "w") as f:
+    with open(report_path, "w", encoding="utf-8") as f:
         f.write("# Tutorial Analysis Report\n\n")
         f.write(f"**Tutorial:** `{tutorial_path.name}`\n")
         f.write(f"**Quality Score:** {state.get('synthesis', {}).get('quality_score', 'N/A')}\n\n")
