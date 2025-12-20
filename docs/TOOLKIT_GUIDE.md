@@ -697,7 +697,7 @@ See `BEST_PRACTICES.md` for decomposition strategies.
 
 ## Summary
 
-The amplifier-dev toolkit teaches you to build sophisticated AI tools using:
+The Amplifier toolkit teaches you to build sophisticated AI tools using:
 
 1. **Metacognitive recipes** - Code-orchestrated multi-stage thinking processes
 2. **Multi-config pattern** - Specialized configs for each cognitive subtask

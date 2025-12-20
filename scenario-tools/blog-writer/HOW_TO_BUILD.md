@@ -153,7 +153,7 @@ Amplifier fixed these issues. Total time from idea to working tool: one conversa
 
 ## The Key Insight: Different Thinking Needs Different Settings
 
-**This is the core of the amplifier-dev pattern:**
+**This is the core of the Amplifier multi-config pattern:**
 
 Traditional approach (single config):
 ```python
@@ -466,7 +466,7 @@ The person who created this tool didn't write any code. They:
 
 **You can do the same.**
 
-The amplifier-dev pattern makes sophisticated tools accessible through natural language description of thinking processes.
+The Amplifier multi-config pattern makes sophisticated tools accessible through natural language description of thinking processes.
 
 For more examples and patterns, see:
 - [Tutorial Analyzer](../tutorial-analyzer/README.md) - 6-config example
