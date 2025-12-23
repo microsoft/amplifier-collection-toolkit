@@ -5,10 +5,11 @@ Provides common fixtures for testing utilities, mocking external dependencies,
 and creating test data structures.
 """
 
-import pytest
 import json
-from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
+from unittest.mock import MagicMock
+
+import pytest
 
 
 @pytest.fixture
@@ -34,11 +35,7 @@ def mock_resolver():
 def temp_json_file(tmp_path):
     """Create a temporary JSON file with sample data."""
     json_file = tmp_path / "test_data.json"
-    data = {
-        "name": "test",
-        "version": "1.0",
-        "items": [1, 2, 3]
-    }
+    data = {"name": "test", "version": "1.0", "items": [1, 2, 3]}
     json_file.write_text(json.dumps(data, indent=2))
     return json_file
 
@@ -50,21 +47,20 @@ def sample_config():
         "session": {
             "orchestrator": {
                 "module": "loop-basic",
-                "source": "git+https://github.com/microsoft/amplifier-module-loop-basic@main"
+                "source": "git+https://github.com/microsoft/amplifier-module-loop-basic@main",
             },
             "context": {
                 "module": "context-simple",
-                "source": "git+https://github.com/microsoft/amplifier-module-context-simple@main"
+                "source": "git+https://github.com/microsoft/amplifier-module-context-simple@main",
             },
         },
-        "providers": [{
-            "module": "provider-anthropic",
-            "source": "git+https://github.com/microsoft/amplifier-module-provider-anthropic@main",
-            "config": {
-                "model": "claude-sonnet-4-5",
-                "temperature": 0.3
+        "providers": [
+            {
+                "module": "provider-anthropic",
+                "source": "git+https://github.com/microsoft/amplifier-module-provider-anthropic@main",
+                "config": {"model": "claude-sonnet-4-5", "temperature": 0.3},
             }
-        }]
+        ],
     }
 
 
@@ -82,18 +78,18 @@ def sample_markdown_files(tmp_path):
     # Create directory structure
     docs_dir = tmp_path / "docs"
     docs_dir.mkdir()
-    
+
     nested_dir = docs_dir / "nested"
     nested_dir.mkdir()
-    
+
     # Create markdown files
     (docs_dir / "file1.md").write_text("# File 1\nContent")
     (docs_dir / "file2.md").write_text("# File 2\nContent")
     (nested_dir / "file3.md").write_text("# File 3\nContent")
-    
+
     # Create non-markdown file
     (docs_dir / "readme.txt").write_text("Text file")
-    
+
     return docs_dir
 
 
@@ -131,6 +127,7 @@ def empty_directory(tmp_path):
 def mock_progress_reporter():
     """Mock ProgressReporter for testing."""
     from unittest.mock import MagicMock
+
     reporter = MagicMock()
     reporter.update = MagicMock()
     reporter.complete = MagicMock()
